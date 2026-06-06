@@ -1,0 +1,1459 @@
+<!doctype html>
+<html lang="id">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>MOodStudy Booster v9.0 - Cosmic Neon Dashboard</title>
+
+    <link
+      href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght=400;500;600;700;800&family=Fredoka:wght=500;600;700&family=JetBrains+Mono:wght=500;700&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+    />
+
+    <style>
+      /* ==========================================================================
+           1. ARSITEKTUR VARIABEL CSS & SISTEM INTEGRASI TEMA EMOSI
+           ========================================================================== */
+      :root {
+        --bg-cosmic-base: #060919;
+        --spotify-green: #1db954;
+        --white-pure: #ffffff;
+        --text-cool-slate: #94a3b8;
+        --text-muted-dark: #475569;
+
+        /* Default Theme Setup (Ambis/Neutral Mode) */
+        --primary-accent: #38bdf8;
+        --secondary-accent: #818cf8;
+        --glow-matrix: rgba(56, 189, 248, 0.25);
+        --glass-surface-bg: rgba(255, 255, 255, 0.02);
+        --glass-border-line: rgba(255, 255, 255, 0.06);
+        --panel-inner-darkness: rgba(2, 4, 13, 0.4);
+
+        /* Tema Kreatif 1: Senang (Electric Pink & Sunny Yellow Aura) */
+        --senang-p: #ff007f;
+        --senang-s: #ffaa00;
+        --senang-glow: rgba(255, 0, 127, 0.4);
+        --senang-bg: radial-gradient(
+          circle at 50% 0%,
+          #30061c 0%,
+          #060919 100%
+        );
+
+        /* Tema Kreatif 2: Sedih (Deep Neon Cyan & Sapphire Blue Aura) */
+        --sedih-p: #00f2fe;
+        --sedih-s: #4facfe;
+        --sedih-glow: rgba(0, 242, 254, 0.4);
+        --sedih-bg: radial-gradient(circle at 50% 0%, #021c36 0%, #060919 100%);
+
+        /* Tema Kreatif 3: Marah (Hyper Crimson Fire & Volcano Orange) */
+        --marah-p: #ff003c;
+        --marah-s: #ff6a00;
+        --marah-glow: rgba(255, 0, 60, 0.45);
+        --marah-bg: radial-gradient(circle at 50% 0%, #42020e 0%, #060919 100%);
+
+        /* Tema Kreatif 4: Malas (Bio-Luminescent Mint Green & Soft Cyan) */
+        --malas-p: #00ff87;
+        --malas-s: #60efff;
+        --malas-glow: rgba(0, 255, 135, 0.4);
+        --malas-bg: radial-gradient(circle at 50% 0%, #022b1a 0%, #060919 100%);
+      }
+
+      /* ==========================================================================
+           2. GLOBAL RESET & SCROLLBAR CUSTOMIZATION
+           ========================================================================== */
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+        outline: none;
+        -webkit-tap-highlight-color: transparent;
+      }
+
+      ::-webkit-scrollbar {
+        width: 8px;
+        height: 8px;
+      }
+      ::-webkit-scrollbar-track {
+        background: rgba(0, 0, 0, 0.3);
+      }
+      ::-webkit-scrollbar-thumb {
+        background: rgba(255, 255, 255, 0.08);
+        border-radius: 20px;
+      }
+      ::-webkit-scrollbar-thumb:hover {
+        background: var(--primary-accent);
+      }
+
+      body {
+        font-family: "Plus Jakarta Sans", sans-serif;
+        background-color: var(--bg-cosmic-base);
+        background-image: radial-gradient(
+          circle at 50% -20%,
+          rgba(56, 189, 248, 0.1) 0px,
+          transparent 50%
+        );
+        color: var(--white-pure);
+        min-height: 100vh;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        padding: 50px 20px;
+        overflow-x: hidden;
+        transition: background 1s cubic-bezier(0.25, 1, 0.5, 1);
+      }
+
+      /* Background Animasi Ornamen Partikel Cyber */
+      .cosmic-grid-overlay {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background-image:
+          linear-gradient(rgba(255, 255, 255, 0.005) 1px, transparent 1px),
+          linear-gradient(
+            90deg,
+            rgba(255, 255, 255, 0.005) 1px,
+            transparent 1px
+          );
+        background-size: 60px 60px;
+        pointer-events: none;
+        z-index: -1;
+      }
+
+      .master-dashboard-container {
+        width: 100%;
+        max-width: 1450px;
+        display: flex;
+        flex-direction: column;
+        gap: 35px;
+      }
+
+      /* ==========================================================================
+           3. APPLICATION BRANDING HEADER (PREMIUM GLASS)
+           ========================================================================== */
+      .glass-premium-header {
+        background: linear-gradient(
+          90deg,
+          rgba(255, 255, 255, 0.01) 0%,
+          rgba(255, 255, 255, 0.03) 100%
+        );
+        border: 1px solid var(--glass-border-line);
+        border-radius: 30px;
+        padding: 25px 40px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        flex-wrap: wrap;
+        gap: 20px;
+        box-shadow: 0 15px 35px rgba(0, 0, 0, 0.2);
+      }
+
+      .brand-core-identity h1 {
+        font-family: "Fredoka", sans-serif;
+        font-size: 3rem;
+        letter-spacing: -0.5px;
+        background: linear-gradient(
+          90deg,
+          var(--primary-accent),
+          var(--secondary-accent)
+        );
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        transition: background 0.8s ease;
+      }
+
+      .brand-core-identity p {
+        color: var(--text-cool-slate);
+        font-size: 1.05rem;
+        font-weight: 600;
+        margin-top: 4px;
+      }
+
+      .system-radar-pill {
+        background: rgba(0, 0, 0, 0.4);
+        border: 1px solid var(--glass-border-line);
+        padding: 12px 24px;
+        border-radius: 50px;
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        font-size: 0.9rem;
+        font-weight: 700;
+        color: #cbd5e1;
+      }
+
+      .neon-pulse-dot {
+        width: 10px;
+        height: 10px;
+        background: var(--primary-accent);
+        border-radius: 50%;
+        box-shadow: 0 0 12px var(--primary-accent);
+        animation: radarPulse 2s infinite;
+      }
+
+      @keyframes radarPulse {
+        0% {
+          transform: scale(1);
+          opacity: 1;
+          box-shadow: 0 0 4px var(--primary-accent);
+        }
+        50% {
+          transform: scale(1.4);
+          opacity: 0.5;
+          box-shadow: 0 0 16px var(--primary-accent);
+        }
+        100% {
+          transform: scale(1);
+          opacity: 1;
+          box-shadow: 0 0 4px var(--primary-accent);
+        }
+      }
+
+      /* ==========================================================================
+           4. COMPLEX INTERACTIVE LAYOUT (3-COLUMN MATRIX GRID)
+           ========================================================================== */
+      .matrix-dashboard-grid {
+        display: grid;
+        grid-template-columns: 1fr;
+        gap: 30px;
+      }
+
+      @media (min-width: 992px) {
+        .matrix-dashboard-grid {
+          grid-template-columns: 360px 1fr;
+        }
+      }
+
+      @media (min-width: 1350px) {
+        .matrix-dashboard-grid {
+          grid-template-columns: 380px 1fr 350px;
+        }
+      }
+
+      /* Base Panel Standar Premium */
+      .glass-cosmic-panel {
+        background: linear-gradient(
+          180deg,
+          var(--glass-surface-bg) 0%,
+          rgba(0, 0, 0, 0.3) 100%
+        );
+        border: 2px solid var(--glass-border-line);
+        border-radius: 40px;
+        padding: 30px;
+        backdrop-filter: blur(30px);
+        -webkit-backdrop-filter: blur(30px);
+        display: flex;
+        flex-direction: column;
+        gap: 25px;
+        box-shadow:
+          0 25px 50px rgba(0, 0, 0, 0.4),
+          inset 0 1px 0 rgba(255, 255, 255, 0.05);
+        transition:
+          border-color 0.6s ease,
+          box-shadow 0.6s ease;
+      }
+
+      .panel-master-title {
+        font-family: "Fredoka", sans-serif;
+        font-size: 1.4rem;
+        color: #f8fafc;
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        letter-spacing: 0.3px;
+      }
+
+      .panel-master-title i {
+        color: var(--primary-accent);
+        transition: color 0.6s ease;
+      }
+
+      /* ==========================================================================
+           5. SECTION SELEKSI EMOSI CUSTOM (KIRI)
+           ========================================================================== */
+      .left-control-stream {
+        display: flex;
+        flex-direction: column;
+        gap: 30px;
+      }
+
+      .mood-flow-container {
+        display: flex;
+        flex-direction: column;
+        gap: 16px;
+      }
+
+      /* Desain Neo-Glass Kartu Emosi */
+      .neo-mood-card {
+        background: var(--panel-inner-darkness);
+        border: 1px solid var(--glass-border-line);
+        border-radius: 28px;
+        padding: 22px;
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        gap: 18px;
+        position: relative;
+        overflow: hidden;
+        transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+      }
+
+      .neo-glow-track {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: radial-gradient(
+          circle at left center,
+          var(--card-glow-color) 0%,
+          transparent 65%
+        );
+        opacity: 0;
+        transition: opacity 0.4s ease;
+        z-index: 0;
+      }
+
+      .neo-mood-card:hover {
+        transform: translateX(8px) scale(1.02);
+        border-color: var(--card-brand-color);
+        box-shadow: 0 15px 30px var(--card-glow-color);
+      }
+
+      .neo-mood-card:hover .neo-glow-track {
+        opacity: 0.18;
+      }
+
+      .shield-avatar-box {
+        width: 60px;
+        height: 60px;
+        border-radius: 20px;
+        background: rgba(255, 255, 255, 0.02);
+        border: 1px solid rgba(255, 255, 255, 0.08);
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        font-size: 2rem;
+        position: relative;
+        z-index: 1;
+        transition:
+          transform 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275),
+          background 0.5s ease;
+      }
+
+      .neo-mood-card:hover .shield-avatar-box {
+        transform: scale(1.15) rotate(12deg);
+        background: var(--card-brand-gradient);
+        border-color: transparent;
+        box-shadow: 0 8px 20px var(--card-glow-color);
+      }
+
+      .meta-text-box {
+        flex-grow: 1;
+        position: relative;
+        z-index: 1;
+      }
+
+      .meta-text-box h4 {
+        font-family: "Fredoka", sans-serif;
+        font-size: 1.25rem;
+        color: #f1f5f9;
+        margin-bottom: 3px;
+      }
+
+      .meta-text-box p {
+        font-size: 0.85rem;
+        color: var(--text-cool-slate);
+        font-weight: 500;
+      }
+
+      .neon-arrow-button {
+        width: 36px;
+        height: 36px;
+        border-radius: 50%;
+        background: rgba(255, 255, 255, 0.03);
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        color: var(--text-muted-dark);
+        font-size: 0.9rem;
+        position: relative;
+        z-index: 1;
+        transition: all 0.3s;
+      }
+
+      .neo-mood-card:hover .neon-arrow-button {
+        background: var(--card-brand-color);
+        color: #ffffff;
+        transform: rotate(-45deg);
+        box-shadow: 0 0 15px var(--card-brand-color);
+      }
+
+      /* Active Card Activation */
+      .neo-mood-card.is-selected {
+        border-color: var(--card-brand-color);
+        box-shadow: 0 15px 30px var(--card-glow-color);
+        background: rgba(255, 255, 255, 0.04);
+      }
+      .neo-mood-card.is-selected .shield-avatar-box {
+        background: var(--card-brand-gradient);
+        border-color: transparent;
+        transform: scale(1.1);
+      }
+      .neo-mood-card.is-selected .neon-arrow-button {
+        background: var(--card-brand-color);
+        color: #ffffff;
+        transform: rotate(-45deg);
+      }
+
+      /* Variabel CSS Pemetaan Emosi */
+      .mo-senang {
+        --card-brand-color: var(--senang-p);
+        --card-brand-gradient: linear-gradient(
+          135deg,
+          var(--senang-p),
+          var(--senang-s)
+        );
+        --card-glow-color: var(--senang-glow);
+      }
+      .mo-sedih {
+        --card-brand-color: var(--sedih-p);
+        --card-brand-gradient: linear-gradient(
+          135deg,
+          var(--sedih-p),
+          var(--sedih-s)
+        );
+        --card-glow-color: var(--sedih-glow);
+      }
+      .mo-marah {
+        --card-brand-color: var(--marah-p);
+        --card-brand-gradient: linear-gradient(
+          135deg,
+          var(--marah-p),
+          var(--marah-s)
+        );
+        --card-glow-color: var(--marah-glow);
+      }
+      .mo-malas {
+        --card-brand-color: var(--malas-p);
+        --card-brand-gradient: linear-gradient(
+          135deg,
+          var(--malas-p),
+          var(--malas-s)
+        );
+        --card-glow-color: var(--malas-glow);
+      }
+
+      /* Widget Analytics Mini */
+      .analytics-mini-widget {
+        background: var(--panel-inner-darkness);
+        border: 1px solid var(--glass-border-line);
+        border-radius: 28px;
+        padding: 20px;
+        display: flex;
+        flex-direction: column;
+        gap: 15px;
+      }
+
+      .analytics-title {
+        font-size: 0.85rem;
+        font-weight: 800;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+        color: var(--text-cool-slate);
+      }
+
+      .progress-bar-container {
+        display: flex;
+        flex-direction: column;
+        gap: 6px;
+      }
+      .progress-labels {
+        display: flex;
+        justify-content: space-between;
+        font-size: 0.8rem;
+        font-weight: 700;
+      }
+      .progress-line-track {
+        width: 100%;
+        height: 8px;
+        background: rgba(255, 255, 255, 0.05);
+        border-radius: 10px;
+        overflow: hidden;
+      }
+      .progress-line-fill {
+        width: 65%;
+        height: 100%;
+        background: linear-gradient(
+          90deg,
+          var(--primary-accent),
+          var(--secondary-accent)
+        );
+        border-radius: 10px;
+        transition: width 0.5s ease;
+      }
+
+      /* ==========================================================================
+           6. CENTRAL VIEWPORT: BLUEPRINT TACTICAL ARCHITECTURE (TENGAH)
+           ========================================================================== */
+      .central-strategy-viewport {
+        display: flex;
+        flex-direction: column;
+      }
+
+      /* Fallback State Screen */
+      .cosmic-fallback-board {
+        padding: 60px 40px;
+        text-align: center;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        gap: 20px;
+        background: rgba(255, 255, 255, 0.01);
+        border: 2px dashed var(--glass-border-line);
+        border-radius: 32px;
+        height: 100%;
+      }
+
+      .cosmic-fallback-board .radar-icon-frame {
+        width: 90px;
+        height: 90px;
+        border-radius: 50%;
+        background: rgba(255, 255, 255, 0.02);
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        font-size: 2.5rem;
+        color: var(--text-muted-dark);
+        border: 1px solid var(--glass-border-line);
+      }
+
+      /* Area Tampilan Strategi Utama */
+      .immersive-strategy-board {
+        display: none; /* Dinyalakan via JS Engine */
+        flex-direction: column;
+        gap: 30px;
+        animation: cubicPopUp 0.6s cubic-bezier(0.25, 1, 0.5, 1);
+      }
+
+      @keyframes cubicPopUp {
+        from {
+          opacity: 0;
+          transform: scale(0.96) translateY(20px);
+        }
+        to {
+          opacity: 1;
+          transform: scale(1) translateY(0);
+        }
+      }
+
+      .cinematic-hero-banner {
+        display: flex;
+        align-items: center;
+        gap: 25px;
+        background: var(--panel-inner-darkness);
+        padding: 30px;
+        border-radius: 28px;
+        border: 1px solid rgba(255, 255, 255, 0.04);
+        position: relative;
+        overflow: hidden;
+      }
+
+      .banner-glow-back {
+        position: absolute;
+        top: -50%;
+        left: -20%;
+        width: 60%;
+        height: 200%;
+        background: var(--primary-accent);
+        filter: blur(80px);
+        opacity: 0.15;
+        pointer-events: none;
+        transition: background 0.6s;
+      }
+
+      .banner-avatar-hub {
+        width: 80px;
+        height: 80px;
+        border-radius: 24px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        font-size: 2.5rem;
+        position: relative;
+        z-index: 1;
+      }
+
+      .banner-captions-hub {
+        position: relative;
+        z-index: 1;
+      }
+      .banner-captions-hub h2 {
+        font-family: "Fredoka", sans-serif;
+        font-size: 1.8rem;
+        color: #ffffff;
+      }
+      .banner-captions-hub p {
+        font-size: 0.95rem;
+        color: var(--text-cool-slate);
+        font-weight: 600;
+        margin-top: 3px;
+      }
+
+      /* Struktur Rincian Taktik Metode */
+      .tactical-blueprint-feed {
+        display: flex;
+        flex-direction: column;
+        gap: 25px;
+      }
+
+      .blueprint-node-card {
+        background: var(--panel-inner-darkness);
+        border-left: 6px solid var(--primary-accent);
+        border-radius: 0 28px 28px 0;
+        padding: 28px;
+        box-shadow: 0 10px 20px rgba(0, 0, 0, 0.15);
+        transition: all 0.3s ease;
+      }
+
+      .blueprint-node-card:hover {
+        transform: translateX(6px);
+        background: rgba(255, 255, 255, 0.01);
+      }
+
+      .node-tag-header {
+        display: inline-flex;
+        align-items: center;
+        gap: 10px;
+        font-family: "Fredoka", sans-serif;
+        font-size: 1.15rem;
+        font-weight: 600;
+        color: var(--primary-accent);
+        margin-bottom: 14px;
+        transition: color 0.3s;
+      }
+
+      .blueprint-node-card p {
+        font-size: 1rem;
+        color: #cbd5e1;
+        line-height: 1.75;
+        text-align: justify;
+      }
+
+      /* Spotify Deep Linking Button */
+      .immersive-spotify-anchor {
+        text-decoration: none;
+        background: #ffffff;
+        color: #02040d;
+        font-family: "Fredoka", sans-serif;
+        font-size: 1.2rem;
+        font-weight: 700;
+        padding: 20px;
+        border-radius: 26px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        gap: 12px;
+        box-shadow: 0 15px 30px rgba(255, 255, 255, 0.03);
+        transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        position: relative;
+        overflow: hidden;
+      }
+
+      .immersive-spotify-anchor i {
+        font-size: 1.6rem;
+        color: var(--spotify-green);
+        transition: color 0.4s;
+      }
+
+      /* Audio Visualizer Waves Mini (Dekorasi) */
+      .visualizer-waves-hub {
+        display: flex;
+        gap: 3px;
+        align-items: flex-end;
+        height: 18px;
+      }
+      .v-bar {
+        width: 3px;
+        height: 100%;
+        background: var(--spotify-green);
+        border-radius: 2px;
+        animation: bounceBar 1s ease infinite alternate;
+      }
+      .v-bar:nth-child(2) {
+        animation-delay: 0.2s;
+      }
+      .v-bar:nth-child(3) {
+        animation-delay: 0.4s;
+      }
+
+      @keyframes bounceBar {
+        0% {
+          height: 30%;
+        }
+        100% {
+          height: 100%;
+        }
+      }
+
+      .immersive-spotify-anchor:hover {
+        transform: translateY(-5px);
+        background: var(--primary-accent);
+        color: #ffffff;
+        box-shadow: 0 20px 40px var(--glow-matrix);
+      }
+      .immersive-spotify-anchor:hover i,
+      .immersive-spotify-anchor:hover .v-bar {
+        background: #fff;
+        color: #fff;
+      }
+
+      /* ==========================================================================
+           7. UTILITY ENGINE CONTROL PANE (KANAN)
+           ========================================================================== */
+      .right-utility-stream {
+        display: flex;
+        flex-direction: column;
+        gap: 30px;
+      }
+
+      /* Pemutar Waktu Pomodoro */
+      .pomodoro-space-capsule {
+        background: var(--panel-inner-darkness);
+        border: 1px solid var(--glass-border-line);
+        border-radius: 28px;
+        padding: 24px;
+        text-align: center;
+        display: flex;
+        flex-direction: column;
+        gap: 16px;
+      }
+
+      .numeric-clock-screen {
+        font-family: "JetBrains Mono", monospace;
+        font-size: 2.8rem;
+        font-weight: 700;
+        letter-spacing: -1px;
+        color: #f8fafc;
+        background: rgba(0, 0, 0, 0.5);
+        padding: 12px;
+        border-radius: 20px;
+        border: 1px solid rgba(255, 255, 255, 0.02);
+        text-shadow: 0 0 10px rgba(255, 255, 255, 0.1);
+      }
+
+      .clock-action-grid {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 12px;
+      }
+
+      .capsule-btn {
+        background: var(--glass-surface-bg);
+        border: 1px solid var(--glass-border-line);
+        color: #fff;
+        padding: 12px;
+        border-radius: 16px;
+        font-weight: 700;
+        font-size: 0.9rem;
+        cursor: pointer;
+        transition: all 0.3s;
+      }
+
+      .btn-trigger-go:hover {
+        background: var(--primary-accent);
+        border-color: var(--primary-accent);
+        color: #060919;
+        box-shadow: 0 0 15px var(--primary-accent);
+      }
+
+      .btn-trigger-reset:hover {
+        background: rgba(244, 63, 94, 0.15);
+        border-color: #f43f5e;
+        color: #f43f5e;
+      }
+
+      /* Jurnal Catatan & Target Tugas */
+      .journal-notepad-module {
+        display: flex;
+        flex-direction: column;
+        gap: 14px;
+        flex-grow: 1;
+      }
+
+      .notepad-input-group {
+        display: flex;
+        gap: 10px;
+      }
+
+      .notepad-input-group input {
+        flex-grow: 1;
+        background: rgba(0, 0, 0, 0.5);
+        border: 1px solid var(--glass-border-line);
+        border-radius: 16px;
+        padding: 14px;
+        color: #fff;
+        font-size: 0.9rem;
+        font-family: inherit;
+        transition: border-color 0.3s;
+      }
+
+      .notepad-input-group input:focus {
+        border-color: var(--primary-accent);
+      }
+
+      .btn-add-journal-node {
+        background: var(--glass-surface-bg);
+        border: 1px solid var(--glass-border-line);
+        color: #fff;
+        width: 48px;
+        border-radius: 16px;
+        cursor: pointer;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        transition: all 0.3s;
+      }
+
+      .btn-add-journal-node:hover {
+        background: var(--primary-accent);
+        color: #060919;
+        border-color: var(--primary-accent);
+        box-shadow: 0 0 15px var(--primary-accent);
+      }
+
+      .reactive-journal-feed {
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+        max-height: 250px;
+        overflow-y: auto;
+        padding-right: 5px;
+      }
+
+      .journal-item-row {
+        background: rgba(0, 0, 0, 0.3);
+        border: 1px solid rgba(255, 255, 255, 0.02);
+        padding: 14px;
+        border-radius: 16px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        font-size: 0.9rem;
+        color: #cbd5e1;
+        animation: appendAnim 0.3s cubic-bezier(0.25, 1, 0.5, 1);
+      }
+
+      @keyframes appendAnim {
+        from {
+          opacity: 0;
+          transform: translateY(10px) scale(0.95);
+        }
+        to {
+          opacity: 1;
+          transform: translateY(0) scale(1);
+        }
+      }
+
+      .journal-item-row button {
+        background: transparent;
+        border: none;
+        color: var(--text-cool-slate);
+        cursor: pointer;
+        transition: color 0.2s;
+        font-size: 0.95rem;
+      }
+
+      .journal-item-row button:hover {
+        color: #f43f5e;
+      }
+
+      /* ==========================================================================
+           8. COGNITIVE TICKER FOOTER (QUOTES WALL)
+           ========================================================================== */
+      .cosmic-ticker-footer {
+        background: linear-gradient(
+          90deg,
+          rgba(255, 255, 255, 0.01) 0%,
+          rgba(255, 255, 255, 0.03) 100%
+        );
+        border: 1px solid var(--glass-border-line);
+        padding: 20px;
+        border-radius: 24px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 14px;
+      }
+
+      .cosmic-ticker-footer i {
+        color: var(--primary-accent);
+        font-size: 1.1rem;
+      }
+      .cosmic-ticker-footer p {
+        font-size: 0.95rem;
+        color: var(--text-cool-slate);
+        font-style: italic;
+        font-weight: 500;
+        text-align: center;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="cosmic-grid-overlay"></div>
+
+    <div class="master-dashboard-container">
+      <header class="glass-premium-header">
+        <div class="brand-core-identity">
+          <h1 id="brandTitle">SoundSpace Engine</h1>
+          <p>Arsitektur Strategi Pembelajaran & Optimalisasi Fokus Emosional</p>
+        </div>
+        <div class="system-radar-pill">
+          <div class="neon-pulse-dot" id="sysPulse"></div>
+          <span id="sysStatusText">Frekuensi Standar Aktif</span>
+        </div>
+      </header>
+
+      <div class="matrix-dashboard-grid">
+        <nav class="left-control-stream">
+          <div class="glass-cosmic-panel">
+            <h3 class="panel-master-title">
+              <i class="fas fa-wave-square"></i> Gelombang Emosi
+            </h3>
+
+            <div class="mood-flow-container">
+              <div
+                class="neo-mood-card mo-senang"
+                onclick="igniteCosmicEngine('Senang')"
+              >
+                <div class="neo-glow-track"></div>
+                <div class="shield-avatar-box">🥳</div>
+                <div class="meta-text-box">
+                  <h4>Lagi Senang</h4>
+                  <p>Fase dopamin puncak, siap hantam bab rumit</p>
+                </div>
+                <div class="neon-arrow-button">
+                  <i class="fas fa-chevron-right"></i>
+                </div>
+              </div>
+
+              <div
+                class="neo-mood-card mo-sedih"
+                onclick="igniteCosmicEngine('Sedih')"
+              >
+                <div class="neo-glow-track"></div>
+                <div class="shield-avatar-box">😭</div>
+                <div class="meta-text-box">
+                  <h4>Lagi Sedih</h4>
+                  <p>Amigdala kelelahan, butuh skema santai</p>
+                </div>
+                <div class="neon-arrow-button">
+                  <i class="fas fa-chevron-right"></i>
+                </div>
+              </div>
+
+              <div
+                class="neo-mood-card mo-marah"
+                onclick="igniteCosmicEngine('Marah')"
+              >
+                <div class="neo-glow-track"></div>
+                <div class="shield-avatar-box">😡</div>
+                <div class="meta-text-box">
+                  <h4>Lagi Marah</h4>
+                  <p>Lonjakan adrenalin, ubah jadi fokus tajam</p>
+                </div>
+                <div class="neon-arrow-button">
+                  <i class="fas fa-chevron-right"></i>
+                </div>
+              </div>
+
+              <div
+                class="neo-mood-card mo-malas"
+                onclick="igniteCosmicEngine('Malas')"
+              >
+                <div class="neo-glow-track"></div>
+                <div class="shield-avatar-box">🦥</div>
+                <div class="meta-text-box">
+                  <h4>Lagi Malas</h4>
+                  <p>Inersia kognitif, kelabui resistensi awal</p>
+                </div>
+                <div class="neon-arrow-button">
+                  <i class="fas fa-chevron-right"></i>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="glass-cosmic-panel">
+            <div class="analytics-mini-widget">
+              <div class="analytics-title">
+                <i class="fas fa-chart-pie"></i> Analytics Fokus Harian
+              </div>
+              <div class="progress-bar-container">
+                <div class="progress-labels">
+                  <span>Efisiensi Kognitif</span>
+                  <span id="efficiencyVal">65%</span>
+                </div>
+                <div class="progress-line-track">
+                  <div class="progress-line-fill" id="efficiencyBar"></div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </nav>
+
+        <div class="central-strategy-viewport">
+          <main class="glass-cosmic-panel" style="height: 100%">
+            <div class="cosmic-fallback-board" id="fallbackBoard">
+              <div class="radar-icon-frame">
+                <i class="fas fa-bolt-lightning"></i>
+              </div>
+              <h3>Menunggu Input Modulasi Emosi</h3>
+              <p
+                style="
+                  color: var(--text-cool-slate);
+                  font-size: 0.95rem;
+                  max-width: 420px;
+                  line-height: 1.6;
+                "
+              >
+                Silakan tentukan status emosional atau suasana hatimu saat ini
+                melalui panel instrumen kontrol kiri untuk membuka panduan
+                taktik komplit.
+              </p>
+            </div>
+
+            <div class="immersive-strategy-board" id="strategyBoard">
+              <div class="cinematic-hero-banner">
+                <div class="banner-glow-back" id="bannerGlow"></div>
+                <div class="banner-avatar-hub" id="bannerAvatar">✨</div>
+                <div class="banner-captions-hub">
+                  <h2 id="bannerHeaderTitle">Nama Sistem</h2>
+                  <p id="bannerSubTitle">Slogan Panduan</p>
+                </div>
+              </div>
+
+              <div class="tactical-blueprint-feed">
+                <div class="blueprint-node-card" id="nodeCard1">
+                  <div class="node-tag-header" id="tagHeader1">
+                    <i class="fas fa-brain"></i>
+                    <span id="m1Name">Metode Inti</span>
+                  </div>
+                  <p id="m1Description">Penjelasan komplit metode utama.</p>
+                </div>
+
+                <div class="blueprint-node-card" id="nodeCard2">
+                  <div class="node-tag-header" id="tagHeader2">
+                    <i class="fas fa-compass-drafting"></i>
+                    <span id="m2Name">Akselerasi Taktis</span>
+                  </div>
+                  <p id="m2Description">Penjelasan komplit metode sekunder.</p>
+                </div>
+              </div>
+
+              <a
+                href="#"
+                target="_blank"
+                class="immersive-spotify-anchor"
+                id="spotifyCoreLink"
+              >
+                <div class="visualizer-waves-hub">
+                  <div class="v-bar"></div>
+                  <div class="v-bar"></div>
+                  <div class="v-bar"></div>
+                </div>
+                <span>Jalankan Musik Sinkronisasi di Spotify</span>
+                <div class="visualizer-waves-hub">
+                  <div class="v-bar"></div>
+                  <div class="v-bar"></div>
+                  <div class="v-bar"></div>
+                </div>
+              </a>
+            </div>
+          </main>
+        </div>
+
+        <div class="right-utility-stream">
+          <section class="glass-cosmic-panel">
+            <h3 class="panel-master-title">
+              <i class="fas fa-hourglass-start"></i> Timer Fokus Pomodoro
+            </h3>
+            <div class="pomodoro-space-capsule">
+              <div class="numeric-clock-screen" id="clockScreen">25:00</div>
+              <div class="clock-action-grid">
+                <button
+                  class="capsule-btn btn-trigger-go"
+                  id="btnClockToggle"
+                  onclick="manageClockSystem()"
+                >
+                  Mulai
+                </button>
+                <button
+                  class="capsule-btn btn-trigger-reset"
+                  onclick="resetClockSystem()"
+                >
+                  Reset
+                </button>
+              </div>
+            </div>
+          </section>
+
+          <section class="glass-cosmic-panel" style="flex-grow: 1">
+            <h3 class="panel-master-title">
+              <i class="fas fa-list-check"></i> Jurnal Tugas & Target
+            </h3>
+            <div class="journal-notepad-module">
+              <div class="notepad-input-group">
+                <input
+                  type="text"
+                  id="journalInputField"
+                  placeholder="Tulis target belajar baru..."
+                  onkeypress="checkJournalEnter(event)"
+                />
+                <button
+                  class="btn-add-journal-node"
+                  onclick="addNewJournalNode()"
+                >
+                  <i class="fas fa-paper-plane"></i>
+                </button>
+              </div>
+              <div class="reactive-journal-feed" id="journalContainer"></div>
+            </div>
+          </section>
+        </div>
+      </div>
+
+      <footer class="cosmic-ticker-footer">
+        <i class="fas fa-quote-left"></i>
+        <p id="quoteBoxText">
+          "Setiap aksi kecil menuju tujuan belajarmu hari ini akan membuka
+          gerbang kesuksesan hari esok."
+        </p>
+      </footer>
+    </div>
+
+    <script>
+      // Database Taktik Pedagogis Komplit Terintegrasi Akun Artis Spotify Asli
+      const cosmicMatrixDatabase = {
+        Senang: {
+          emoji: "🥳",
+          header: "Konfigurasi Dopamin Puncak",
+          slogan: "Akselerasi Kreativitas & Retensi Konseptual Maksimal",
+          primaryColor: "var(--senang-p)",
+          secondaryColor: "var(--senang-s)",
+          glowShadow: "var(--senang-glow)",
+          wallpaper: "var(--senang-bg)",
+          efficiency: "95%",
+          spotifyUrl:
+            "https://open.spotify.com/playlist/37i9dQZF1DXa2SpCHv6897", // Playlist Viral Hits Indonesia Populer
+          m1: {
+            nama: "Teknik Feynman (Systemic Teaching Method)",
+            deskripsi:
+              "Suasana hatimu yang ceria menandakan bahwa sirkuit dopamin di otak tengah sedang aktif dan berada pada performa puncak. Kondisi biologis ini sangat ideal untuk menjalankan Teknik Feynman. Ambil selembar kertas putih besar atau papan tulis analog, lalu cobalah untuk memaparkan bab materi pelajaran yang baru saja kamu baca seolah-olah kamu adalah seorang pakar atau guru populer yang sedang mengajar siswa sekolah dasar. Hindari penggunaan kosakata sains yang rumit, melainkan gantilah dengan bahasa analogi sederhana yang penuh humor. Metode verbal aktif ini terbukti memaksa otak mengunci pemahaman materi ke dalam sistem memori jangka panjang hingga mencapai rasio keberhasilan 90%.",
+          },
+          m2: {
+            nama: "Gamifikasi Interaktif & Simulasi Kuis Mandiri",
+            deskripsi:
+              "Ubah lembar latihan bab soal (seperti Matematika, Informatika, atau Sosiologi) menjadi sebuah arena permainan video game terstruktur. Buat target capaian personal yang ketat: setiap berhasil memecahkan 5 butir soal penalaran analitis tanpa melihat lembar kunci jawaban, kamu berhak mengklaim poin fiktif yang nantinya dapat ditukarkan dengan hak istirahat tambahan. Karakter jaringan otak yang gembira memiliki kecenderungan sangat menyukai pola kompetisi positif dan tantangan taktis, sehingga materi pelajaran yang rumit sekalipun akan terasa adiktif untuk diselesaikan.",
+          },
+        },
+        Sedih: {
+          emoji: "😭",
+          header: "Konfigurasi Gentleness Recovery",
+          slogan: "Dekompresi Tekanan Amigdala & Pemulihan Fokus Bertahap",
+          primaryColor: "var(--sedih-p)",
+          secondaryColor: "var(--sedih-s)",
+          glowShadow: "var(--sedih-glow)",
+          wallpaper: "var(--sedih-bg)",
+          efficiency: "45%",
+          spotifyUrl:
+            "https://open.spotify.com/playlist/37i9dQZF1DX4wG7g99p974", // Playlist Pop Melankolis & Galau Indonesia
+          m1: {
+            nama: "Micro-Pomodoro Interval (Skema Defisit Energi 20:10)",
+            deskripsi:
+              "Ketika gelombang emosi sedih, kecewa, atau patah semangat datang melanda, kapasitas energi mentalmu mengalami penurunan drastis akibat aktivitas berlebih pada pusat regulasi emosi (amigdala). Jangan sekali-kali memaksa otakmu melakukan sesi belajar maraton dengan beban kerja berat. Gunakan metode Pomodoro mikro yang telah dimodifikasi: fokus belajar selama 20 menit saja secara tenang, lalu wajibkan dirimu mengambil hak jeda istirahat penuh selama 10 menit untuk menenangkan hati, mengambil air minum, atau sekadar melakukan latihan pernapasan dalam. Pola intervensi berkala ini memberikan ruang bagi sistem saraf untuk mereduksi hormon stres (kortisol).",
+          },
+          m2: {
+            nama: "Aesthetic Chromatic Mind-Mapping (Struktur Visual Kreatif)",
+            deskripsi:
+              "Jauhkan diri dari kegiatan membaca barisan teks paragraf buku paket tebal yang cenderung memicu rasa jenuh dan sakit kepala. Ambil kertas putih polos, taruh di tengah meja, lalu susun sebuah peta konsep rangkuman pelajaran menggunakan kombinasi spidol atau pulpen warna-warni cerah yang estetik. Hubungkan poin sub-bab materi menggunakan garis dekoratif melengkung disertai simbol ikon visual kecil yang representatif. Aktivitas motorik visual ringan ini terbukti klinis mampu memindahkan beban kerja kognitif dari pusat stres menuju area pemrosesan kreativitas visual yang menenangkan.",
+          },
+        },
+        Marah: {
+          emoji: "😡",
+          header: "Konfigurasi Adrenaline Redirection",
+          slogan:
+            "Konversi Agresivitas Menjadi Fokus Kompetitif Kecepatan Tinggi",
+          primaryColor: "var(--marah-p)",
+          secondaryColor: "var(--marah-s)",
+          glowShadow: "var(--marah-glow)",
+          wallpaper: "var(--marah-bg)",
+          efficiency: "85%",
+          spotifyUrl:
+            "https://open.spotify.com/playlist/37i9dQZF1DX1kxjz3697N8", // Playlist Phonk / Up-beat Pemompa Adrenalin
+          m1: {
+            nama: "Sistem Kognitif Blurting (Katarsis Tumpahan Memori)",
+            deskripsi:
+              "Salurkan luapan energi kemarahan atau rasa kesal secara fisik ke aktivitas akademis positif melalui metode *Blurting*. Caranya sangat sederhana: buka rangkuman materi atau rumus pelajaran, lalu baca dengan kecepatan tinggi selama kurun waktu 5 menit tanpa interupsi. Detik itu juga, tutup bukumu rapat-rapat, ambil kertas kosong bekas, lalu tumpahkan, tulis, dan coret secepat mungkin segala macam poin ingatan atau definisi yang berhasil ditangkap otakmu tanpa memedulikan aspek kerapian tulisan. Teknik katarsis kognitif ini memaksa emosi agresif bertransformasi menjadi daya ingat paksa yang luar biasa tajam.",
+          },
+          m2: {
+            nama: "Hard-Deadline Simulation Training (Simulasi Tekanan Ujian Ekstrem)",
+            deskripsi:
+              'Kondisi emosional marah memicu lonjakan masif hormon adrenalin dalam darah yang menempatkan tubuhmu pada mode bertarung (*fight mode*). Manfaatkan status siaga kompetitif ini untuk menaklukkan kompilasi soal-soal latihan tersulit. Pasang alarm penghitung waktu mundur dengan durasi batas pengerjaan yang sangat ketat dan menantang, misal: "10 soal penalaran kuantitatif ini wajib selesai dibabat habis dalam waktu maksimal 12 menit!". Tekanan waktu yang ekstrem ini akan menyerap energi marahmu dan mengonversinya menjadi tingkat konsentrasi mutlak.',
+          },
+        },
+        Malas: {
+          emoji: "🦥",
+          header: "Konfigurasi Frictionless Activation",
+          slogan:
+            "Eradikasi Inersia Kognitif & Manipulasi Pertahanan Sinapsis Otak",
+          primaryColor: "var(--malas-p)",
+          secondaryColor: "var(--malas-s)",
+          glowShadow: "var(--malas-glow)",
+          wallpaper: "var(--malas-bg)",
+          efficiency: "70%",
+          spotifyUrl:
+            "https://open.spotify.com/playlist/37i9dQZF1dX8U76w23g8m6", // Playlist Lofi Focus Instrument Tanpa Vokal
+          m1: {
+            nama: "The Nano 2-Minute Rule (Aturan Hambatan Rendah Mikro)",
+            deskripsi:
+              'Munculnya rasa malas akut umumnya bukan disebabkan karena kamu tidak kompeten, melainkan karena otak bawah sadarmu menginterpretasikan kegiatan belajar sebagai sebuah beban kerja raksasa yang melelahkan. Kelabui benteng pertahanan psikologis tersebut dengan membuat janji mikro: "Aku hanya perlu berjalan ke meja, duduk, menyalakan laptop, dan membaca satu baris kalimat saja dari ringkasan materi selama tepat dua menit. Setelah dua menit terlampaui, aku bebas untuk berhenti dan kembali rebahan." Trik ini bertujuan memotong gaya gesek (*friction*) awal belajar. Berdasarkan riset, 85% orang yang berhasil melewati 2 menit pertama akan memilih terus melanjutkan belajarnya tanpa beban.',
+          },
+          m2: {
+            nama: "Teknik Isolasi Konteks Stimulus Lingkungan Fisik",
+            deskripsi:
+              "Karakter rasa malas sangat terikat dengan lingkungan tempat tubuhmu berada. Jangan pernah sekali-kali mencoba belajar di atas tempat tidur, sofa santai, atau di dekat gawai yang menyala aktif menampilkan notifikasi media sosial. Pindahkan posisimu secara paksa ke meja belajar bersih dengan pencahayaan lampu maksimal, tegakkan posisi dudukmu, dan sembunyikan HP di ruangan lain. Dengan memodifikasi stimulus fisik di sekitarmu secara instan, sirkuit saraf akan mematikan mode santai (*hibernation mode*) dan memicu hormon kesiapan kerja.",
+          },
+        },
+      };
+
+      const staticQuotesBank = [
+        '"Rahasia utama untuk melangkah maju adalah dengan berani memulai tindakan pertama." — Mark Twain',
+        '"Jangan biarkan kondisi emosimu mendikte masa depan akademikmu. Kelola energinya dengan cerdas!"',
+        '"Disiplin adalah jembatan kokoh yang menghubungkan impian besarmu dengan pencapaian yang nyata."',
+        '"Setiap coretan rumus dan rangkuman hari ini adalah investasi besar untuk kejayaan masa depanmu."',
+        '"Rasa malas adalah ilusi kognitif. Tembus batasan 2 menit pertama, dan kamu tidak akan bisa dihentikan!"',
+      ];
+
+      // ==========================================================================
+      // SYSTEM CORE CORE IMPLEMENTATION: DYNAMIC INTERACTIVE CONFIGURATOR
+      // ==========================================================================
+      function igniteCosmicEngine(selectedMood) {
+        const data = cosmicMatrixDatabase[selectedMood];
+
+        // 1. Mutasi Variabel Utama CSS Root Untuk Perubahan Warna Aksen Total UI
+        document.documentElement.style.setProperty(
+          "--primary-accent",
+          data.primaryColor,
+        );
+        document.documentElement.style.setProperty(
+          "--secondary-accent",
+          data.secondaryColor,
+        );
+        document.documentElement.style.setProperty(
+          "--glow-matrix",
+          data.glowShadow,
+        );
+
+        // 2. Ubah Latar Belakang Wallpaper Ambient Secara Halus Transisional
+        document.body.style.background = data.wallpaper;
+
+        // 3. Sinkronisasi Tipografi Gradasi Header Judul
+        const bTitle = document.getElementById("brandTitle");
+        bTitle.style.background = `linear-gradient(90deg, ${data.primaryColor}, ${data.secondaryColor})`;
+        bTitle.style.webkitBackgroundClip = "text";
+
+        // 4. Perbarui Status Monitor Sistem Radar Pill
+        document.getElementById("sysPulse").style.background =
+          data.primaryColor;
+        document.getElementById("sysPulse").style.boxShadow =
+          `0 0 15px ${data.primaryColor}`;
+        document.getElementById("sysStatusText").innerText =
+          `Sinkronisasi Selesai: Mode ${selectedMood}`;
+
+        // 5. Update Status Visual Progress Bar Efisiensi Kognitif Widget
+        document.getElementById("efficiencyVal").innerText = data.efficiency;
+        document.getElementById("efficiencyBar").style.width = data.efficiency;
+
+        // 6. Atur State Kelas Aktif Pada Kartu Emosi Kiri
+        document.querySelectorAll(".neo-mood-card").forEach((card) => {
+          card.classList.remove("is-selected");
+        });
+        const targetedCard = document.querySelector(
+          `.mo-${selectedMood.toLowerCase()}`,
+        );
+        if (targetedCard) targetedCard.classList.add("is-selected");
+
+        // 7. Aktifkan Layar Tengah & Suntik Data Taktik Pedagogis Lengkap
+        document.getElementById("fallbackBoard").style.display = "none";
+        const board = document.getElementById("strategyBoard");
+        board.style.display = "flex";
+
+        // Set Komponen Banner Atas
+        const bannerAv = document.getElementById("bannerAvatar");
+        bannerAv.innerText = data.emoji;
+        bannerAv.style.background = `linear-gradient(135deg, ${data.primaryColor}, ${data.secondaryColor})`;
+        bannerAv.style.boxShadow = `0 10px 25px ${data.glowShadow}`;
+        document.getElementById("bannerGlow").style.background =
+          data.primaryColor;
+
+        document.getElementById("bannerHeaderTitle").innerText = data.header;
+        document.getElementById("bannerSubTitle").innerText = data.slogan;
+
+        // Set Akses Garis Warna Samping & Teks Konten Metode Rincian
+        document.getElementById("nodeCard1").style.borderLeftColor =
+          data.primaryColor;
+        document.getElementById("nodeCard2").style.borderLeftColor =
+          data.secondaryColor;
+        document.getElementById("tagHeader1").style.color = data.primaryColor;
+        document.getElementById("tagHeader2").style.color = data.secondaryColor;
+
+        document.getElementById("m1Name").innerText = data.m1.nama;
+        document.getElementById("m1Description").innerText = data.m1.deskripsi;
+        document.getElementById("m2Name").innerText = data.m2.nama;
+        document.getElementById("m2Description").innerText = data.m2.deskripsi;
+
+        // 8. Alihkan Link Tujuan Tombol Spotify Utama Berdasarkan Database Resmi
+        document.getElementById("spotifyCoreLink").href = data.spotifyUrl;
+
+        // 9. Rotasi Teks Kutipan Motivasi Secara Acak
+        shuffleQuotesFeed();
+      }
+
+      function shuffleQuotesFeed() {
+        const index = Math.floor(Math.random() * staticQuotesBank.length);
+        document.getElementById("quoteBoxText").innerText =
+          staticQuotesBank[index];
+      }
+
+      // ==========================================================================
+      // SYSTEM CORE IMPLEMENTATION: POMODORO CLOCK ENGINE
+      // ==========================================================================
+      let clockIntervalInstance = null;
+      let totalSecondsRemaining = 25 * 60;
+      let isClockActive = false;
+
+      function refreshClockScreen() {
+        const minutes = Math.floor(totalSecondsRemaining / 60);
+        const seconds = totalSecondsRemaining % 60;
+        const finalMinutes = minutes < 10 ? "0" + minutes : minutes;
+        const finalSeconds = seconds < 10 ? "0" + seconds : seconds;
+        document.getElementById("clockScreen").innerText =
+          `${finalMinutes}:${finalSeconds}`;
+      }
+
+      function manageClockSystem() {
+        const actionButton = document.getElementById("btnClockToggle");
+
+        if (isClockActive) {
+          // Hentikan Jalannya Waktu Jeda
+          clearInterval(clockIntervalInstance);
+          isClockActive = false;
+          actionButton.innerText = "Mulai";
+          actionButton.style.background = "var(--glass-surface-bg)";
+          actionButton.style.color = "#fff";
+        } else {
+          // Aktifkan Jalannya Waktu Hitung Mundur
+          isClockActive = true;
+          actionButton.innerText = "Jeda";
+          actionButton.style.background = "var(--primary-accent)";
+          actionButton.style.color = "#060919";
+
+          clockIntervalInstance = setInterval(() => {
+            if (totalSecondsRemaining > 0) {
+              totalSecondsRemaining--;
+              refreshClockScreen();
+            } else {
+              // Sesi Selesai, Set Ulang Ke Awal
+              clearInterval(clockIntervalInstance);
+              isClockActive = false;
+              actionButton.innerText = "Mulai";
+              alert(
+                "Sesi fokus Pomodoro selesai! Silakan ambil hak istirahat sejenak untuk menyegarkan pikiran.",
+              );
+              totalSecondsRemaining = 25 * 60;
+              refreshClockScreen();
+            }
+          }, 1000);
+        }
+      }
+
+      function resetClockSystem() {
+        clearInterval(clockIntervalInstance);
+        isClockActive = false;
+        totalSecondsRemaining = 25 * 60;
+        refreshClockScreen();
+
+        const actionButton = document.getElementById("btnClockToggle");
+        actionButton.innerText = "Mulai";
+        actionButton.style.background = "var(--glass-surface-bg)";
+        actionButton.style.color = "#fff";
+      }
+
+      // ==========================================================================
+      // SYSTEM CORE IMPLEMENTATION: CORE REACTIVE JOURNAL MEMO (NOTES LIST)
+      // ==========================================================================
+      let reactiveJournalArray = [
+        "Tinjau materi Microsoft Access (Relasi Tabel & Form Query)",
+        "Gambar diagram mind map peta siklus batuan geosains",
+        "Praktikkan aturan 2 menit untuk menaklukkan rasa malas",
+      ];
+
+      function renderJournalDashboard() {
+        const targetContainer = document.getElementById("journalContainer");
+        targetContainer.innerHTML = ""; // Reset kontainer
+
+        if (reactiveJournalArray.length === 0) {
+          targetContainer.innerHTML = `<p style="color: var(--text-cool-slate); font-size: 0.85rem; text-align: center; padding: 20px;">Belum ada target tugas sekolah yang tercatat.</p>`;
+          return;
+        }
+
+        reactiveJournalArray.forEach((text, idx) => {
+          const elementRow = document.createElement("div");
+          elementRow.className = "journal-item-row";
+          elementRow.innerHTML = `
+                    <span>${text}</span>
+                    <button onclick="removeJournalNode(${idx})"><i class="fas fa-trash-can"></i></button>
+                `;
+          targetContainer.appendChild(elementRow);
+        });
+      }
+
+      function addNewJournalNode() {
+        const inputField = document.getElementById("journalInputField");
+        const targetedText = inputField.value.trim();
+
+        if (targetedText !== "") {
+          reactiveJournalArray.unshift(targetedText); // Memasukkan catatan di urutan paling atas
+          inputField.value = ""; // Kosongkan input bar
+          renderJournalDashboard();
+        }
+      }
+
+      function checkJournalEnter(event) {
+        if (event.key === "Enter") {
+          addNewJournalNode();
+        }
+      }
+
+      function removeJournalNode(index) {
+        reactiveJournalArray.splice(index, 1);
+        renderJournalDashboard();
+      }
+
+      // ==========================================================================
+      // INITIALIZATION DISPATCHER
+      // ==========================================================================
+      window.onload = function () {
+        renderJournalDashboard();
+        refreshClockScreen();
+      };
+    </script>
+  </body>
+</html>
